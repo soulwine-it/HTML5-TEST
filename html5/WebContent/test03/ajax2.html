@@ -2,9 +2,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>박보영</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
+		function fn_process() {
+			$.ajax({
+				type:"post",
+				async:false,
+				url:"http://localhost:8080/html5/ajaxTest2",
+				dataType:"xml",  
+				success:function (info, textStatus){
+					$(info).find("star").each(function(){
+						var title=$(this).find("title").text();
+						var writer=$(this).find("writer").text();
+						var image=$(this).find("image").text();
+						
+						$("#starInfo").append(
+								"<p>" + title + "</p>" +
+								"<p>" + writer + "</p>"+
+								"<img src=" + image + " />"
+						);
+					});
+				},
+				error:function(data, textStatus){
+					alert("에러가 발생했습니다.");
+				},
+				complete:function(data, textStatus){
+					//alert("작업완료");
+				}
+			});
+			
+		}
+	
+	</script>
 </head>
 <body>
-
+<div id="starInfo"></div>
+<input type=button value="박보영 요청" onClick="fn_process()">
 </body>
 </html>
